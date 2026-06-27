@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>라니아케아 초은하단 · LANIAKEA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;500;600&family=Do+Hyeon&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:#02030a;color:#e9e2cf;font-family:'Oswald','Gowun Batang',sans-serif;line-height:1.6;overflow-x:hidden;}
+  .space-bg{
+    position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(circle at 16% 14%, rgba(80,60,150,.13), transparent 40%),
+      radial-gradient(circle at 84% 22%, rgba(40,90,140,.11), transparent 42%),
+      radial-gradient(circle at 72% 82%, rgba(150,60,100,.09), transparent 44%),
+      radial-gradient(circle at 50% 50%, #060814 0%, #03040c 55%, #010109 100%);
+  }
+  .skyfield{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* NAV */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:13px 26px;background:rgba(5,7,16,.62);backdrop-filter:blur(10px);border-bottom:1px solid rgba(244,231,201,.12);}
+  .nav .brand{font-family:'Bebas Neue';letter-spacing:.3em;color:#e8b765;font-size:20px;white-space:nowrap;text-decoration:none;}
+  .nav ul{list-style:none;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;}
+  .nav a{display:inline-block;padding:8px 15px;color:#e9e2cf;text-decoration:none;font-family:'Oswald';font-weight:500;font-size:15px;letter-spacing:.02em;border-radius:20px;transition:background .2s,color .2s;}
+  .nav a:hover{color:#0a1028;background:#e8b765;}
+  .nav a.active{color:#e8b765;}
+  .nav a.active:hover{color:#0a1028;}
+  @media(max-width:700px){.nav{flex-direction:column;gap:8px;padding:10px 14px;}.nav ul{justify-content:center;}.nav a{padding:6px 11px;font-size:14px;}}
+
+  /* HERO */
+  .page-hero{text-align:center;padding:150px 20px 30px;background:radial-gradient(circle at 50% 30%, rgba(70,92,140,.22), transparent 70%);}
+  .page-hero h1{font-family:'Do Hyeon',sans-serif;font-weight:400;letter-spacing:.1em;font-size:clamp(34px,7vw,80px);color:#f4e7c9;text-shadow:0 0 24px rgba(232,183,101,.45),2px 3px 0 rgba(184,73,43,.5);}
+  .page-hero .sub{font-family:'Bebas Neue';letter-spacing:.4em;color:#e8b765;font-size:clamp(13px,2.1vw,20px);margin-top:10px;}
+  .page-hero .lede{max-width:600px;color:#cfc6b0;font-family:'Gowun Batang',serif;}
+
+  /* 2단 레이아웃 (다른 페이지와 통일) */
+  .page-hero .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:start;width:100%;max-width:1120px;margin:0 auto;}
+  .page-hero .hero-media{position:relative;text-align:center;}
+  .page-hero .hero-media h1{font-size:clamp(30px,4.6vw,58px);line-height:1.12;margin:0 0 18px;}
+  .page-hero .hero-shot{display:block;width:100%;aspect-ratio:16/9;border-radius:16px;overflow:hidden;background:#05070f;border:1px solid rgba(244,231,201,.12);box-shadow:0 0 55px rgba(120,150,220,.22),0 16px 44px rgba(0,0,0,.5);}
+  .page-hero .hero-shot svg{width:100%;height:100%;display:block;}
+  .page-hero .hero-shot img{width:100%;height:100%;object-fit:cover;display:block;}
+  .page-hero .hero-media .sub{margin-top:14px;}
+  .page-hero .hero-media .lede{margin:16px auto 0;}
+  .page-hero .hero-info{text-align:left;}
+  .page-hero .hero-info h2{font-family:'Do Hyeon',sans-serif;font-weight:400;letter-spacing:.03em;font-size:clamp(24px,3.4vw,36px);color:#f0a85a;line-height:1.12;margin:0 0 16px;text-shadow:0 0 22px rgba(240,168,90,.3);}
+  .page-hero .hero-info p{font-family:'Gowun Batang',serif;font-size:15.5px;color:#cfc6b0;margin-bottom:12px;}
+  .page-hero .hero-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+  .page-hero .hero-facts .hf{background:rgba(244,231,201,.06);border:1px solid rgba(244,231,201,.2);border-radius:12px;padding:9px 12px;}
+  .page-hero .hero-facts .hf .k{font-family:'Bebas Neue';letter-spacing:.18em;color:#7fc6c6;font-size:12px;}
+  .page-hero .hero-facts .hf .v{font-family:'Oswald';font-weight:600;color:#f4e7c9;font-size:14.5px;}
+  @media(max-width:820px){.page-hero .hero-grid{grid-template-columns:1fr;gap:26px;}.page-hero .hero-info{text-align:center;}.page-hero .hero-facts{max-width:420px;margin:16px auto 0;}}
+
+  main{max-width:1080px;margin:0 auto;padding:20px 20px 90px;}
+  .section-title{margin:30px 0 6px;font-family:'Do Hyeon',sans-serif;font-weight:400;font-size:clamp(24px,4vw,34px);color:#f4e7c9;letter-spacing:.04em;text-align:center;}
+  .section-sub{text-align:center;color:#9fb0c8;font-family:'Bebas Neue';letter-spacing:.3em;margin-bottom:26px;}
+
+  .gals{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:26px;}
+  .gal{background:rgba(244,231,201,.045);border:1px solid rgba(244,231,201,.14);border-radius:18px;overflow:hidden;backdrop-filter:blur(3px);transition:transform .2s,border-color .2s,box-shadow .2s;}
+  .gal:hover{transform:translateY(-5px);border-color:rgba(232,183,101,.45);box-shadow:0 14px 36px rgba(0,0,0,.45);}
+  .gal .pic{position:relative;aspect-ratio:16/10;background:#0c1020;overflow:hidden;}
+  .gal .pic img{width:100%;height:100%;object-fit:cover;display:block;}
+  .gal .pic svg{width:100%;height:100%;display:block;}
+  .gal .pic .tag{position:absolute;left:8px;bottom:8px;font-family:'Oswald';font-size:11px;color:#f4e7c9;background:rgba(5,7,16,.6);border:1px solid rgba(244,231,201,.2);padding:3px 9px;border-radius:14px;backdrop-filter:blur(3px);}
+  .gal .body{padding:18px;}
+  .gal h3{font-family:'Do Hyeon',sans-serif;font-weight:400;font-size:22px;color:#f0a85a;letter-spacing:.02em;}
+  .gal .en{font-family:'Bebas Neue';letter-spacing:.22em;color:#7fc6c6;font-size:14px;margin:2px 0 10px;}
+  .gal .meta{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:11px;}
+  .gal .meta span{font-family:'Oswald';font-size:12px;color:#e9e2cf;background:rgba(244,231,201,.07);border:1px solid rgba(244,231,201,.22);border-radius:18px;padding:4px 10px;}
+  .gal .meta span b{color:#f0a85a;font-weight:600;}
+  .gal p{font-family:'Gowun Batang',serif;font-size:14.5px;color:#cfc6b0;}
+
+  footer{text-align:center;padding:40px 20px;border-top:1px solid rgba(244,231,201,.12);color:#9b937f;font-family:'Oswald';letter-spacing:.05em;}
+  footer a{color:#e8b765;text-decoration:none;}
+</style>
+</head>
+<body>
+
+<div class="space-bg"></div>
+<svg class="skyfield" preserveAspectRatio="none"></svg>
+
+<nav class="nav">
+  <a class="brand" href="index.html">★ COSMOS</a>
+  <ul>
+    <li><a href="index.html#top">태양계</a></li>
+    <li><a href="constellations.html">별자리</a></li>
+    <li><a href="milkyway.html">밀키웨이 은하</a></li>
+    <li><a href="localgroup.html">국부은하군</a></li>
+    <li><a class="active" href="laniakea.html">라니아케아초은하단</a></li>
+    <li><a href="index.html">프록시마센터우리</a></li>
+  </ul>
+</nav>
+
+<header class="page-hero">
+  <div class="hero-grid">
+    <div class="hero-media">
+      <h1>라니아케아<br>초은하단</h1>
+      <div class="hero-shot" id="lani"><img src="images/laniakea_hero.png" alt="라니아케아 초은하단 시각화" onerror="this.remove();if(window.__laniFallback)window.__laniFallback();"></div>
+      <div class="sub">LANIAKEA SUPERCLUSTER</div>
+      <p class="lede">우리은하가 속한 '광대한 하늘'. 약 10만 개의 은하가 하나의 거대한 흐름으로 묶인 초은하단입니다.</p>
+    </div>
+    <div class="hero-info">
+      <h2>우리가 속한 초은하단</h2>
+      <p>라니아케아(Laniakea)는 하와이어로 '광대한 하늘'이라는 뜻으로, 2014년 천문학자들이 은하들의 운동(특이속도) 흐름을 분석해 새롭게 정의한 우리의 초은하단입니다. 우리은하와 국부은하군, 그리고 처녀자리 초은하단은 모두 이 거대한 구조의 일부입니다.</p>
+      <p>지름은 약 5억 2천만 광년에 이르고, 약 10만 개의 은하와 태양 질량의 약 10경(10<sup>17</sup>) 배에 달하는 질량을 품습니다. 라니아케아는 단단히 묶인 천체가 아니라, 은하들이 공통의 중력 골짜기로 흘러드는 '유역(流域)'처럼 그 경계가 정의됩니다.</p>
+      <p>그 흐름이 모여드는 바닥에는 '거대 인력체(Great Attractor)'라 불리는 거대한 중력 집중이 있어, 라니아케아의 모든 은하가 그쪽으로 천천히 이끌려 갑니다. 경계 너머의 페르세우스–물고기자리 초은하단은 반대 방향으로 흘러, 두 구조 사이에 보이지 않는 분수령을 이룹니다.</p>
+      <div class="hero-facts">
+        <div class="hf"><div class="k">SIZE</div><div class="v">지름 약 5.2억 광년</div></div>
+        <div class="hf"><div class="k">GALAXIES</div><div class="v">은하 약 10만 개</div></div>
+        <div class="hf"><div class="k">MASS</div><div class="v">약 10¹⁷ 태양질량</div></div>
+        <div class="hf"><div class="k">CENTER</div><div class="v">거대 인력체</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <h2 class="section-title">라니아케아의 주요 구조</h2>
+  <div class="section-sub">INSIDE LANIAKEA</div>
+  <div class="gals" id="gals"></div>
+</main>
+
+<footer>
+  이미지: NASA / JPL-Caltech · GALEX (Public Domain) · 흐름도는 라니아케아의 구조를 단순화한 일러스트입니다 · <a href="index.html">← 태양계로 돌아가기</a>
+</footer>
+
+<script>
+// 로컬(images/) 우선 → 실패 시 온라인 → 그래도 실패 시 색상 배경
+function localSrc(url){return 'images/'+url.split('/').pop().replace(/~/g,'_');}
+function imgErr(el){
+  if(el.dataset.web){const w=el.dataset.web;el.removeAttribute('data-web');el.src=w;return;}
+  el.parentElement.style.background='radial-gradient(circle at 40% 35%, #3a4a7a, #0c1020)';
+  el.remove();
+}
+
+// background starfield
+(function(){
+  const svg=document.querySelector('.skyfield');
+  const tints=["#fff","#fff","#cfe0ff","#bcd4ff","#ffe9c8"];
+  let s="";
+  for(let i=0;i<420;i++){
+    const x=(Math.random()*100).toFixed(2),y=(Math.random()*100).toFixed(2),
+          r=(Math.random()*1.4+.3).toFixed(2),o=(Math.random()*.6+.4).toFixed(2),
+          c=tints[Math.floor(Math.random()*tints.length)],
+          dur=(Math.random()*3.5+1.8).toFixed(2),delay=(Math.random()*5).toFixed(2);
+    s+=`<circle cx="${x}%" cy="${y}%" r="${r}" fill="${c}" opacity="${o}"><animate attributeName="opacity" values="${o};${(o*0.15).toFixed(2)};${o}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/></circle>`;
+  }
+  svg.innerHTML=s;
+})();
+
+// 라니아케아 흐름도 일러스트 (대표 이미지 로딩 실패 시 대체용)
+window.__laniFallback=function(){
+  const W=480,H=270,gx=388,gy=140;
+  let bg="";
+  for(let i=0;i<70;i++){
+    bg+=`<circle cx="${(Math.random()*W).toFixed(0)}" cy="${(Math.random()*H).toFixed(0)}" r="${(Math.random()*0.9+0.3).toFixed(2)}" fill="#cfe0ff" opacity="${(Math.random()*0.5+0.2).toFixed(2)}"/>`;
+  }
+  let flows="";
+  for(let i=0;i<30;i++){
+    const ang=Math.random()*Math.PI*2, rr=120+Math.random()*150;
+    const sx=(gx+Math.cos(ang)*rr*1.25), sy=(gy+Math.sin(ang)*rr*0.78);
+    const mx=(sx+gx)/2+(Math.random()*46-23), my=(sy+gy)/2+(Math.random()*46-23);
+    flows+=`<path d="M${sx.toFixed(0)},${sy.toFixed(0)} Q${mx.toFixed(0)},${my.toFixed(0)} ${gx},${gy}" fill="none" stroke="#7f9bdf" stroke-opacity="0.28" stroke-width="0.8"/>`;
+  }
+  const mwx=150,mwy=158;
+  const svg=`<svg viewBox="0 0 480 270" preserveAspectRatio="xMidYMid slice">
+    <defs><radialGradient id="ga" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffe9b0" stop-opacity=".9"/>
+      <stop offset="45%" stop-color="#f0a85a" stop-opacity=".5"/>
+      <stop offset="100%" stop-color="#f0a85a" stop-opacity="0"/>
+    </radialGradient></defs>
+    <rect width="480" height="270" fill="#070a18"/>
+    ${bg}${flows}
+    <circle cx="${gx}" cy="${gy}" r="30" fill="url(#ga)"/>
+    <circle cx="${gx}" cy="${gy}" r="4.5" fill="#fff2c8"/>
+    <text x="${gx}" y="${gy+44}" text-anchor="middle" fill="#f0a85a" font-family="Oswald,sans-serif" font-size="11">거대 인력체</text>
+    <circle cx="${mwx}" cy="${mwy}" r="6" fill="#9fb8ff" opacity=".25"/>
+    <circle cx="${mwx}" cy="${mwy}" r="3.4" fill="#fff2c8"/>
+    <text x="${mwx}" y="${mwy+18}" text-anchor="middle" fill="#fff2c8" font-family="Oswald,sans-serif" font-size="11">우리은하</text>
+    <text x="20" y="28" fill="#7fc6c6" font-family="Oswald,sans-serif" font-size="11" opacity=".85">은하 흐름도 · 약 5.2억 광년</text>
+  </svg>`;
+  document.getElementById('lani').innerHTML=svg;
+};
+
+function clusterSVG(id,hue){
+  let s="";
+  for(let i=0;i<120;i++){
+    const a=Math.random()*Math.PI*2, r=Math.pow(Math.random(),1.7)*72;
+    const x=(110+Math.cos(a)*r*1.25).toFixed(1), y=(69+Math.sin(a)*r*0.78).toFixed(1);
+    const rad=(Math.random()*0.9+0.3).toFixed(2), o=(Math.random()*0.6+0.35).toFixed(2);
+    s+=`<circle cx="${x}" cy="${y}" r="${rad}" fill="#fff" opacity="${o}"/>`;
+  }
+  return `<svg viewBox="0 0 220 138" preserveAspectRatio="xMidYMid slice">
+    <defs><radialGradient id="${id}" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="${hue}" stop-opacity=".55"/>
+      <stop offset="55%" stop-color="${hue}" stop-opacity=".14"/>
+      <stop offset="100%" stop-color="${hue}" stop-opacity="0"/>
+    </radialGradient></defs>
+    <rect width="220" height="138" fill="#080b16"/>
+    <ellipse cx="110" cy="69" rx="96" ry="56" fill="url(#${id})"/>${s}</svg>`;
+}
+
+const G=[
+ {kr:"처녀자리 초은하단",en:"VIRGO SUPERCLUSTER",img:"https://images-assets.nasa.gov/image/PIA23122/PIA23122~medium.jpg",
+  cap:"중심 은하 M87 · NASA/Spitzer",
+  meta:[["우리 위치","여기 포함"],["중심","처녀자리 은하단"],["대표","M87 블랙홀"]],
+  info:"우리은하와 국부은하군이 속한 초은하단으로, 라니아케아의 한 갈래입니다. 중심의 처녀자리 은하단에는 거대 타원은하 M87을 비롯해 1,000개가 넘는 은하가 모여 있어, 우리에게 가장 가까운 대형 은하단입니다."},
+ {kr:"바다뱀–센타우루스 초은하단",en:"HYDRA–CENTAURUS",img:"https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001893/GSFC_20171208_Archive_e001893~small.jpg",
+  cap:"센타우루스 A · 허블/NASA",
+  meta:[["방향","거대 인력체 쪽"],["대표","센타우루스 A"],["질량","라니아케아 최대급"]],
+  info:"라니아케아에서 가장 무거운 질량이 모인 영역 중 하나로, 거대 인력체가 바로 이 방향에 자리합니다. 대표 천체인 센타우루스 A(NGC 5128)는 두 은하의 충돌로 만들어진, 가장 가까운 활동은하 중 하나입니다."},
+ {kr:"거대 인력체",en:"GREAT ATTRACTOR",ill:true,tint:"#ffd9a8",
+  meta:[["거리","약 2억 광년"],["정체","거대 중력 집중"],["관측","회피대에 가려짐"]],
+  info:"라니아케아 전체의 은하들이 끌려가는 '중력의 바닥'입니다. 우리은하 원반에 가려진 영역(회피대, Zone of Avoidance) 뒤에 있어 직접 관측이 어렵지만, 주변 은하들이 한 방향으로 흐르는 운동에서 그 존재가 드러납니다."},
+ {kr:"페르세우스–물고기자리 초은하단",en:"PERSEUS–PISCES",img:"https://cdn.esahubble.org/archives/images/screen/heic0817a.jpg",
+  cap:"NGC 1275(페르세우스 A) · 허블/ESA",
+  meta:[["관계","이웃 초은하단"],["경계","라니아케아 밖"],["흐름","반대 방향"]],
+  info:"라니아케아 경계 너머에 자리한 거대한 이웃 초은하단입니다. 이곳의 은하들은 라니아케아와 반대 방향으로 흐르며, 두 거대 구조 사이에 보이지 않는 '분수령(경계)'이 존재함을 보여 줍니다."},
+ {kr:"공작–인디언 초은하단",en:"PAVO–INDUS",img:"https://cdn.eso.org/images/screen/eso1118a.jpg",
+  cap:"NGC 6744(공작자리) · ESO",
+  meta:[["구성","라니아케아 3대 갈래"],["방향","남쪽 하늘"],["형태","은하 필라멘트"]],
+  info:"라니아케아를 이루는 세 갈래(처녀자리, 바다뱀–센타우루스, 공작–인디언) 중 하나로, 남쪽 하늘에 길게 뻗은 거대한 은하 필라멘트입니다. 우리은하에서 보면 공작자리·인디언자리 방향에 자리하며, 이 줄기의 은하들도 거대 인력체 쪽 흐름에 합류합니다."},
+ {kr:"섀플리 초은하단",en:"SHAPLEY SUPERCLUSTER",ill:true,tint:"#e89ac0",
+  meta:[["거리","약 6.5억 광년"],["특징","근거리 최대 밀집"],["관계","흐름의 종착점?"]],
+  info:"가까운 우주에서 알려진 가장 거대한 은하 밀집 지역으로, 라니아케아 너머 약 6억 5천만 광년 거리에 있습니다. 일부 연구자는 거대 인력체를 포함한 우리 주변 은하들의 거대한 흐름이 결국 이 섀플리 초은하단 쪽으로 이어진다고 봅니다."}
+];
+
+const wrap=document.getElementById('gals');
+G.forEach((g,i)=>{
+  const meta=g.meta.map(m=>`<span>${m[0]} <b>${m[1]}</b></span>`).join("");
+  const pic=g.ill
+    ? `<div class="pic">${clusterSVG('cg'+i,g.tint||'#cfe0ff')}<span class="tag">✦ 일러스트</span></div>`
+    : `<div class="pic"><img src="${localSrc(g.img)}" data-web="${g.img}" alt="${g.kr}" loading="lazy" onerror="imgErr(this)"><span class="tag">📷 ${g.cap}</span></div>`;
+  const el=document.createElement('article');
+  el.className='gal';
+  el.innerHTML=`
+    ${pic}
+    <div class="body">
+      <h3>${g.kr}</h3>
+      <div class="en">${g.en}</div>
+      <div class="meta">${meta}</div>
+      <p>${g.info}</p>
+    </div>`;
+  wrap.appendChild(el);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>별자리 · CONSTELLATIONS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;500;600&family=Do+Hyeon&family=Jua&family=Gowun+Batang:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:#02030a;color:#e9e2cf;
+    font-family:'Oswald','Gowun Batang',sans-serif;line-height:1.6;overflow-x:hidden;
+  }
+  .space-bg{
+    position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(circle at 16% 14%, rgba(80,60,150,.12), transparent 40%),
+      radial-gradient(circle at 84% 22%, rgba(40,90,140,.10), transparent 42%),
+      radial-gradient(circle at 72% 82%, rgba(150,60,100,.08), transparent 44%),
+      radial-gradient(circle at 50% 50%, #060814 0%, #03040c 55%, #010109 100%);
+  }
+  .skyfield{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;}
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.04;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* NAV */
+  .nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;gap:18px;
+    padding:13px 26px;background:rgba(5,7,16,.62);backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(244,231,201,.12);
+  }
+  .nav .brand{font-family:'Bebas Neue';letter-spacing:.3em;color:#e8b765;font-size:20px;white-space:nowrap;text-decoration:none;}
+  .nav ul{list-style:none;display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;}
+  .nav a{
+    display:inline-block;padding:8px 15px;color:#e9e2cf;text-decoration:none;
+    font-family:'Oswald';font-weight:500;font-size:15px;letter-spacing:.02em;
+    border-radius:20px;transition:background .2s,color .2s;
+  }
+  .nav a:hover{color:#0a1028;background:#e8b765;}
+  .nav a.active{color:#e8b765;}
+  .nav a.active:hover{color:#0a1028;}
+  @media(max-width:700px){
+    .nav{flex-direction:column;gap:8px;padding:10px 14px;}
+    .nav ul{justify-content:center;}
+    .nav a{padding:6px 11px;font-size:14px;}
+  }
+
+  /* PAGE HERO */
+  .page-hero{
+    text-align:center;padding:150px 20px 40px;
+    background:radial-gradient(circle at 50% 30%, rgba(70,92,140,.22), transparent 70%);
+  }
+  .page-hero h1{
+    font-family:'Do Hyeon',sans-serif;font-weight:400;letter-spacing:.14em;
+    font-size:clamp(44px,8vw,92px);color:#f4e7c9;
+    text-shadow:0 0 24px rgba(232,183,101,.45), 2px 3px 0 rgba(184,73,43,.5);
+  }
+  .page-hero .sub{font-family:'Bebas Neue';letter-spacing:.5em;color:#e8b765;font-size:clamp(14px,2.2vw,22px);margin-top:10px;}
+  .page-hero .lede{max-width:600px;margin:22px auto 0;color:#cfc6b0;font-family:'Gowun Batang',serif;}
+  .page-hero .cn-video{
+    display:block;width:min(88vw,620px);aspect-ratio:16/9;
+    margin:2px auto 6px;border-radius:16px;object-fit:cover;background:#05070f;
+    border:1px solid rgba(244,231,201,.12);
+    box-shadow:0 0 55px rgba(120,150,220,.22), 0 16px 44px rgba(0,0,0,.5);
+  }
+
+  /* ===== 히어로 2단 레이아웃 ===== */
+  .page-hero .hero-grid{
+    display:grid;grid-template-columns:1.05fr 1fr;gap:46px;align-items:start;
+    width:100%;max-width:1120px;margin:0 auto;
+  }
+  /* 별자리(h1)와 은하수(h2)의 텍스트 행 맞춤 — 폰트 크기는 유지 */
+  .page-hero .hero-media h1{line-height:1.1;margin:0 0 18px;}
+  .page-hero .hero-info h2{line-height:1.1;margin:0 0 16px;}
+  .page-hero .hero-media{position:relative;text-align:center;}
+  .page-hero .hero-media h1{font-size:clamp(32px,5vw,64px);margin-bottom:14px;}
+  .page-hero .hero-media .cn-video{width:100%;margin:0;}
+  .page-hero .hero-media .sub{margin-top:14px;}
+  .page-hero .hero-info{text-align:left;}
+  .page-hero .hero-info h2{
+    font-family:'Do Hyeon',sans-serif;font-weight:400;letter-spacing:.03em;
+    font-size:clamp(24px,3.4vw,36px);color:#f0a85a;margin-bottom:12px;
+    text-shadow:0 0 22px rgba(240,168,90,.3);
+  }
+  .page-hero .hero-info p{font-family:'Gowun Batang',serif;font-size:15.5px;color:#cfc6b0;margin-bottom:12px;}
+  .page-hero .hero-facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px;}
+  .page-hero .hero-facts .hf{background:rgba(244,231,201,.06);border:1px solid rgba(244,231,201,.2);border-radius:12px;padding:9px 12px;}
+  .page-hero .hero-facts .hf .k{font-family:'Bebas Neue';letter-spacing:.18em;color:#7fc6c6;font-size:12px;}
+  .page-hero .hero-facts .hf .v{font-family:'Oswald';font-weight:600;color:#f4e7c9;font-size:14.5px;}
+  @media(max-width:820px){
+    .page-hero .hero-grid{grid-template-columns:1fr;gap:26px;}
+    .page-hero .hero-info{text-align:center;}
+    .page-hero .hero-facts{max-width:420px;margin:16px auto 0;}
+  }
+
+  /* CARDS */
+  main{max-width:1160px;margin:0 auto;padding:30px 20px 90px;}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:26px;}
+  .card{
+    background:rgba(244,231,201,.045);border:1px solid rgba(244,231,201,.14);
+    border-radius:18px;padding:18px;backdrop-filter:blur(3px);
+    transition:transform .2s,border-color .2s,box-shadow .2s;
+  }
+  .card:hover{transform:translateY(-5px);border-color:rgba(232,183,101,.45);box-shadow:0 14px 36px rgba(0,0,0,.45);}
+  .sky{
+    position:relative;width:100%;aspect-ratio:1.12;border-radius:12px;margin-bottom:14px;overflow:hidden;
+    background:radial-gradient(circle at 50% 42%, rgba(40,62,116,.30), rgba(4,6,16,.2) 70%);
+    border:1px solid rgba(244,231,201,.08);
+  }
+  .sky svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .sky .cphoto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  .sky .otag{
+    position:absolute;left:8px;bottom:8px;z-index:2;
+    font-family:'Oswald';font-size:11px;letter-spacing:.02em;color:#f4e7c9;
+    background:rgba(5,7,16,.6);border:1px solid rgba(244,231,201,.2);
+    padding:3px 9px;border-radius:14px;backdrop-filter:blur(3px);
+  }
+  .card h2{font-family:'Do Hyeon',sans-serif;font-weight:400;font-size:26px;color:#f0a85a;letter-spacing:.03em;}
+  .card .la{font-family:'Bebas Neue';letter-spacing:.28em;color:#7fc6c6;font-size:15px;margin:3px 0 10px;}
+  .card .meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;}
+  .card .meta span{
+    font-family:'Oswald';font-size:12px;letter-spacing:.03em;color:#e9e2cf;
+    background:rgba(244,231,201,.07);border:1px solid rgba(244,231,201,.25);
+    border-radius:20px;padding:4px 11px;
+  }
+  .card .meta span b{color:#f0a85a;font-weight:600;}
+  .card p{font-family:'Gowun Batang',serif;font-size:15px;color:#cfc6b0;}
+
+  footer{
+    text-align:center;padding:40px 20px;border-top:1px solid rgba(244,231,201,.12);
+    color:#9b937f;font-family:'Oswald';letter-spacing:.05em;
+  }
+  footer a{color:#e8b765;text-decoration:none;}
+</style>
+</head>
+<body>
+
+<div class="space-bg"></div>
+<svg class="skyfield" preserveAspectRatio="none"></svg>
+
+<nav class="nav">
+  <a class="brand" href="index.html">★ COSMOS</a>
+  <ul>
+    <li><a href="index.html#top">태양계</a></li>
+    <li><a class="active" href="constellations.html">별자리</a></li>
+    <li><a href="milkyway.html">밀키웨이 은하</a></li>
+    <li><a href="localgroup.html">국부은하군</a></li>
+    <li><a href="laniakea.html">라니아케아초은하단</a></li>
+    <li><a href="index.html">프록시마센터우리</a></li>
+  </ul>
+</nav>
+
+<header class="page-hero">
+  <div class="hero-grid">
+    <div class="hero-media">
+      <h1>별자리</h1>
+      <video class="cn-video" src="videos/constellations_girl.mp4" autoplay loop muted playsinline></video>
+      <div class="sub">CONSTELLATIONS</div>
+      <p class="lede">밤하늘에서 가장 사랑받는 별자리들을 모았습니다. 선을 따라 별을 이어 보세요.</p>
+    </div>
+    <div class="hero-info">
+      <h2>지구에서 보는 은하수</h2>
+      <p>밤하늘을 가로지르는 희뿌연 빛의 띠 '은하수'는, 사실 우리가 우리은하의 원반 안쪽에 자리한 채 그 단면을 옆에서 바라본 모습입니다. 맨눈으로는 구름처럼 보이지만, 그 빛은 너무 멀어 하나하나 구분되지 않는 수천억 개 별빛과 성운·성간 먼지가 겹쳐 만들어 낸 것입니다.</p>
+      <p>은하수의 밝기는 보는 방향에 따라 다릅니다. 여름철 궁수자리 방향은 우리은하의 중심을 향하고 있어 별이 가장 빽빽하고 밝게 보이는 반면, 겨울철에는 은하 바깥쪽을 바라보게 되어 띠가 희미해집니다. 띠를 세로로 갈라놓은 검은 줄(암흑대, Great Rift)은 차가운 성간 먼지구름이 뒤쪽 별빛을 가린 것입니다.</p>
+      <p>우리가 보는 별자리들은 바로 이 은하수를 배경으로, 지구에서의 시선 방향에 따라 늘어선 별들을 이어 만든 '겉보기' 무늬입니다. 실제로는 서로 거리가 제각각인 별들이지만, 지구라는 한 지점에서 보면 하나의 그림처럼 보이는 것이죠. 다만 도시의 빛공해 아래에서는 은하수가 잘 보이지 않아, 어두운 하늘에서 관측해야 그 진면목이 드러납니다.</p>
+      <div class="hero-facts">
+        <div class="hf"><div class="k">COMPOSITION</div><div class="v">별·가스·성간 먼지</div></div>
+        <div class="hf"><div class="k">BRIGHTEST</div><div class="v">여름 · 궁수자리 방향</div></div>
+        <div class="hf"><div class="k">DARK LANE</div><div class="v">암흑대(Great Rift)</div></div>
+        <div class="hf"><div class="k">VIEWING</div><div class="v">어두운 하늘 필요</div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main><div class="cards" id="cards"></div></main>
+
+<footer>
+  별자리 성도는 주요 항성 위치를 단순화해 그린 것입니다 · <a href="index.html">← 태양계로 돌아가기</a>
+</footer>
+
+<script>
+// background starfield
+(function(){
+  const svg=document.querySelector('.skyfield');
+  const tints=["#fff","#fff","#cfe0ff","#bcd4ff","#ffe9c8"];
+  let s="";
+  for(let i=0;i<420;i++){
+    const x=(Math.random()*100).toFixed(2),y=(Math.random()*100).toFixed(2),
+          r=(Math.random()*1.4+.3).toFixed(2),o=(Math.random()*.6+.4).toFixed(2),
+          c=tints[Math.floor(Math.random()*tints.length)],
+          dur=(Math.random()*3.5+1.8).toFixed(2),delay=(Math.random()*5).toFixed(2);
+    s+=`<circle cx="${x}%" cy="${y}%" r="${r}" fill="${c}" opacity="${o}"><animate attributeName="opacity" values="${o};${(o*0.15).toFixed(2)};${o}" dur="${dur}s" begin="${delay}s" repeatCount="indefinite"/></circle>`;
+  }
+  svg.innerHTML=s;
+})();
+
+const C=[
+ {kr:"오리온자리",la:"ORION",season:"겨울",hemi:"적도 부근",
+  photo:"https://images-assets.nasa.gov/image/PIA04227/PIA04227~orig.jpg",obj:"오리온 대성운 (M42)",
+  info:"겨울 밤하늘의 대표 별자리. 사냥꾼 오리온을 형상화했으며, 가운데 나란한 세 별 '삼태성'(오리온의 띠)으로 쉽게 찾을 수 있습니다.",
+  bright:"베텔게우스 · 리겔",
+  stars:[[70,52,3.6],[140,58],[97,108],[112,116],[127,124],[92,170],[152,164,3.4]],
+  lines:[[0,1],[1,6],[6,5],[5,0],[2,3],[3,4]],
+  labels:[{i:0,name:"베텔게우스",color:"#ffb38a"},{i:6,name:"리겔",color:"#9fc4ff"}]},
+
+ {kr:"큰곰자리",la:"URSA MAJOR",season:"봄",hemi:"북반구",
+  photo:"https://images-assets.nasa.gov/image/PIA10968/PIA10968~medium.jpg",obj:"바람개비 은하 (M101)",
+  info:"꼬리 부분의 일곱 별이 바로 '북두칠성'입니다. 국자 모양 끝의 두 별을 이으면 북극성을 찾을 수 있어 길잡이로 쓰입니다.",
+  bright:"두베 · 미자르",
+  stars:[[45,55,3.2],[45,95],[95,100],[90,62],[125,55],[160,48],[195,42,3.2]],
+  lines:[[0,1],[1,2],[2,3],[3,0],[3,4],[4,5],[5,6]],
+  labels:[{i:0,name:"두베"},{i:5,name:"미자르"}]},
+
+ {kr:"작은곰자리",la:"URSA MINOR",season:"연중",hemi:"북반구",
+  photo:"https://cdn.esahubble.org/archives/images/large/heic0401g.jpg",obj:"밤하늘 실사진 · A.Fujii/ESA",
+  info:"꼬리 끝의 별이 천구의 북극에 자리한 '북극성(폴라리스)'입니다. 거의 움직이지 않아 예부터 방위의 기준이 되어 왔습니다.",
+  bright:"폴라리스(북극성)",
+  stars:[[188,40,3.6],[165,58],[148,80],[128,98],[92,92],[82,68],[120,72]],
+  lines:[[0,1],[1,2],[2,3],[3,6],[6,4],[4,5],[5,6]],
+  labels:[{i:0,name:"북극성",color:"#fff2c8"}]},
+
+ {kr:"카시오페이아자리",la:"CASSIOPEIA",season:"가을",hemi:"북반구",
+  photo:"https://images-assets.nasa.gov/image/0203043/0203043~medium.jpg",obj:"카시오페이아자리 A (초신성 잔해)",
+  info:"알파벳 'W'(또는 'M') 모양으로 매우 또렷합니다. 북극성을 사이에 두고 북두칠성 반대편에 있어, 북두칠성이 안 보일 때 길잡이가 됩니다.",
+  bright:"쉐다르",
+  stars:[[40,118],[75,68],[110,108],[145,64],[182,114]],
+  lines:[[0,1],[1,2],[2,3],[3,4]],
+  labels:[{i:2,name:"쉐다르"}]},
+
+ {kr:"전갈자리",la:"SCORPIUS",season:"여름",hemi:"남반구",
+  photo:"https://images-assets.nasa.gov/image/PIA14874/PIA14874~medium.jpg",obj:"전갈 집게 영역 성운 (WISE)",
+  info:"여름 남쪽 하늘 낮게 뜨는 전갈 모양 별자리. 심장에 해당하는 붉은 1등성 '안타레스'가 인상적이며, 꼬리 끝이 독침처럼 굽어 있습니다.",
+  bright:"안타레스",
+  stars:[[45,44],[40,64],[56,80],[74,98,3.8],[94,124],[112,146],[140,156],[164,146],[170,120],[152,106]],
+  lines:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,7],[7,8],[8,9]],
+  labels:[{i:3,name:"안타레스",color:"#ff8a6a"}]},
+
+ {kr:"사자자리",la:"LEO",season:"봄",hemi:"북반구",
+  photo:"https://images-assets.nasa.gov/image/hubble-peers-into-the-heart-of-a-galactic-maelstrom_20949846630_o/hubble-peers-into-the-heart-of-a-galactic-maelstrom_20949846630_o~medium.jpg",obj:"메시에 96 은하 (M96)",
+  info:"봄철 대표 별자리. 머리·갈기는 물음표를 뒤집은 '낫' 모양이고, 그 아래 1등성 '레굴루스'가 사자의 심장에 해당합니다.",
+  bright:"레굴루스",
+  stars:[[55,40],[48,58],[58,78],[80,84],[90,108,3.6],[152,96],[182,118]],
+  lines:[[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[6,4]],
+  labels:[{i:4,name:"레굴루스",color:"#bcd4ff"}]},
+
+ {kr:"백조자리",la:"CYGNUS",season:"여름",hemi:"북반구",
+  photo:"https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000607/GSFC_20171208_Archive_e000607~orig.jpg",obj:"베일 성운 (초신성 잔해)",
+  info:"은하수를 가로질러 나는 백조의 모습으로, 큰 십자가 형태라 '북십자성'이라고도 불립니다. 꼬리의 1등성 '데네브'는 여름철 대삼각형의 한 꼭짓점입니다.",
+  bright:"데네브",
+  stars:[[110,30,3.6],[110,96],[110,166],[50,88],[170,102]],
+  lines:[[0,1],[1,2],[3,1],[1,4]],
+  labels:[{i:0,name:"데네브",color:"#dfe9ff"}]},
+
+ {kr:"황소자리",la:"TAURUS",season:"겨울",hemi:"북반구",
+  photo:"https://images-assets.nasa.gov/image/PIA03606/PIA03606~medium.jpg",obj:"게 성운 (M1)",
+  info:"'V'자 모양의 히아데스 성단이 황소의 얼굴을, 붉은 1등성 '알데바란'이 눈을 이룹니다. 왼쪽 위 작은 별무리는 유명한 '플레이아데스(좀생이별)'입니다.",
+  bright:"알데바란",
+  stars:[[100,118,3.8],[80,98],[62,80],[48,64],[120,100],[146,84],[172,66],[40,38,1.4],[48,32,1.4],[34,30,1.4],[44,42,1.4],[54,38,1.4]],
+  lines:[[0,1],[1,2],[2,3],[0,4],[4,5],[5,6]],
+  labels:[{i:0,name:"알데바란",color:"#ff9b78"}]},
+
+ {kr:"쌍둥이자리",la:"GEMINI",season:"겨울",hemi:"북반구",
+  photo:"https://images-assets.nasa.gov/image/PIA13449/PIA13449~medium.jpg",obj:"해파리 성운 (IC 443)",
+  info:"나란히 선 두 형제를 나타냅니다. 두 머리에 해당하는 밝은 별 '카스토르'와 '폴룩스'가 형제의 이름이며, 겨울 하늘에서 사이좋게 빛납니다.",
+  bright:"카스토르 · 폴룩스",
+  stars:[[72,40,3.4],[118,46,3.6],[62,86],[56,136],[72,152],[112,96],[118,146],[132,156]],
+  lines:[[0,2],[2,3],[3,4],[1,5],[5,6],[6,7],[2,5]],
+  labels:[{i:0,name:"카스토르"},{i:1,name:"폴룩스",color:"#fff2c8"}]}
+];
+
+// 로컬(images/) 우선 → 실패 시 온라인 → 그래도 실패 시 별 그림(SVG)
+function localSrc(url){return 'images/'+url.split('/').pop().replace(/~/g,'_');}
+function imgErr(el){
+  if(el.dataset.web){const w=el.dataset.web;el.removeAttribute('data-web');el.src=w;return;}
+  el.remove();
+}
+
+const wrap=document.getElementById('cards');
+C.forEach(c=>{
+  // background sprinkle inside the diagram
+  let bg="";
+  for(let i=0;i<26;i++){
+    bg+=`<circle cx="${(Math.random()*220).toFixed(1)}" cy="${(Math.random()*200).toFixed(1)}" r="${(Math.random()*0.8+0.3).toFixed(2)}" fill="#cfe0ff" opacity="${(Math.random()*0.5+0.15).toFixed(2)}"/>`;
+  }
+  const lines=c.lines.map(([a,b])=>{
+    const p=c.stars[a],q=c.stars[b];
+    return `<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" stroke="rgba(180,205,255,.4)" stroke-width="1.3" stroke-linecap="round"/>`;
+  }).join("");
+  const stars=c.stars.map(s=>{
+    const r=s[2]||2.4;
+    return `<circle cx="${s[0]}" cy="${s[1]}" r="${(r*2.6).toFixed(1)}" fill="#bcd4ff" opacity=".16"/><circle cx="${s[0]}" cy="${s[1]}" r="${r}" fill="#fff"/>`;
+  }).join("");
+  const labels=(c.labels||[]).map(l=>{
+    const s=c.stars[l.i];
+    const anchor=s[0]>150?'end':'start';
+    const dx=s[0]>150?-6:6;
+    return `<text x="${s[0]+dx}" y="${s[1]+3}" text-anchor="${anchor}" fill="${l.color||'#e9e2cf'}" font-family="Oswald,sans-serif" font-size="9.5" opacity=".92">${l.name}</text>`;
+  }).join("");
+  const svg=`<svg viewBox="0 0 220 200">${bg}${lines}${stars}${labels}</svg>`;
+  const photo=c.photo?`<img class="cphoto" src="${localSrc(c.photo)}" data-web="${c.photo}" alt="${c.obj||c.kr}" loading="lazy" onerror="imgErr(this)">`:'';
+  const otag=c.obj?`<span class="otag">${c.photo?'📷':'✦'} ${c.obj}</span>`:'';
+
+  const el=document.createElement('article');
+  el.className='card';
+  el.innerHTML=`
+    <div class="sky">${svg}${photo}${otag}</div>
+    <h2>${c.kr}</h2>
+    <div class="la">${c.la}</div>
+    <div class="meta">
+      <span>계절 <b>${c.season}</b></span>
+      <span>하늘 <b>${c.hemi}</b></span>
+      <span>대표별 <b>${c.bright}</b></span>
+    </div>
+    <p>${c.info}</p>`;
+  wrap.appendChild(el);
+});
+</script>
+</body>
+</html>
